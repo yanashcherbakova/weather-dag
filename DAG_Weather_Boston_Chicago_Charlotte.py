@@ -3,7 +3,6 @@ from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 from datetime import datetime
 import requests
-import json
 
 def download_weather_data(city, **kwargs):
     api_key= "" #openweathermap
@@ -17,7 +16,6 @@ def download_weather_data(city, **kwargs):
         city_safe = city.replace(' ', '_')
         
         kwargs['ti'].xcom_push(key=f'{city_safe}_weather_data', value = weather_data)
-
 
 def parse_weather_date(city, **kwargs):
 
@@ -68,7 +66,6 @@ default_args = {
     'start_date' : datetime(2025,2,10),
     'end_date' : datetime(2025, 4, 25)
 }
-
 
 with DAG(
     'Weather_dag_new',
